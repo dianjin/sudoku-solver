@@ -10,8 +10,8 @@ A recursive backtracking sudoku solver written in C.
 </ul>
 
 <h3>Algorithm input and output</h3>
-(This applies to both the Demo and Hack versions, since they use the same algorithm.)
-Input: a 9x9 array of ints representing the sudoku puzzle to be solved. Empty cells are denoted by zeroes.
+(This applies to both the Demo and Hack versions, since they use the same algorithm.)<br>
+Input: a 9x9 array of ints representing the sudoku puzzle to be solved. Empty cells are denoted by zeroes.<br>
 Output: Returns an int representing the number of solutions to the given Sudoku puzzle. Prints all solutions to given puzzle, if there are any. Prints the number of calls to the recursive solve(Sudoku p) method needed to generate each solution.
 
 <h3>How the algorithm works</h3>
