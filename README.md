@@ -5,8 +5,8 @@ A recursive backtracking sudoku solver written in C.
 
 <h3>Files included</h3>
 <ul>
-<li>demo.c - This is the Demo version. Meant for demonstration purposes, as it comes with a very basic user interface.
-<li>hack.c - This is the Hack version. Meant for tinkering and customization, as it doesn't come with a user interface or any other frills. 
+<li><strong>demo.c</strong> - This is the Demo version. Meant for demonstration purposes, as it comes with a very basic user interface.
+<li><strong>hack.c</strong> - This is the Hack version. Meant for tinkering and customization, as it doesn't come with a user interface or any other frills. 
 </ul>
 
 <h3>Algorithm input and output</h3>
