@@ -42,7 +42,7 @@ void main() {
     // To give the program a Sudoku to solve, simply declare myPuz using the format given in the following sample puzzles.
 
     // EASY
-    Sudoku myPuz = {{0,9,3,0,5,0,0,0,4}, {0,0,7,0,0,0,0,8,0}, {5,6,0,9,0,0,0,0,7}, {0,8,0,0,3,9,4,2,0}, {0,4,0,8,2,7,0,3,0}, {0,3,5,6,1,0,0,9,0}, {9,0,0,0,0,5,0,4,2}, {0,7,0,0,0,0,1,0,0}, {3,0,0,0,4,0,8,7,0}};
+    //Sudoku myPuz = {{0,9,3,0,5,0,0,0,4}, {0,0,7,0,0,0,0,8,0}, {5,6,0,9,0,0,0,0,7}, {0,8,0,0,3,9,4,2,0}, {0,4,0,8,2,7,0,3,0}, {0,3,5,6,1,0,0,9,0}, {9,0,0,0,0,5,0,4,2}, {0,7,0,0,0,0,1,0,0}, {3,0,0,0,4,0,8,7,0}};
     //Sudoku myPuz = {{0,9,0,0,7,0,6,0,1}, {6,0,7,1,0,2,0,0,0}, {0,8,3,0,0,0,0,7,0}, {9,0,8,4,0,6,0,0,3}, {7,4,0,3,0,9,0,1,6}, {3,0,0,7,0,5,4,0,9}, {0,7,0,0,0,0,1,4,0}, {0,0,0,2,0,1,5,0,7}, {2,0,4,0,5,0,0,6,0}};
     //Sudoku myPuz = {{0,0,0,6,4,9,1,5,0}, {0,3,9,0,5,0,0,0,0}, {6,5,0,3,2,0,0,7,0}, {3,0,7,4,0,6,0,2,0}, {2,0,0,0,0,0,0,0,9}, {0,9,0,5,0,2,4,0,7}, {0,7,0,0,6,4,0,8,1}, {0,0,0,0,7,0,3,4,0}, {0,8,4,2,3,5,0,0,0}};
 
@@ -77,11 +77,13 @@ void main() {
 
     // THIS ONE HAS SIX SOLUTIONS
     // Modified version of Super Tough #3.
-    // Sudoku myPuz = {{0,0,8,0,0,1,7,0,0}, {0,3,0,0,6,4,0,0,9}, {2,0,0,3,0,0,0,0,0}, {0,0,5,0,0,0,6,0,0}, {0,0,2,8,4,6,5,0,0}, {0,0,1,0,0,0,9,0,0}, {0,0,0,0,0,9,0,0,2}, {7,0,0,4,5,0,0,9,0}, {0,0,9,7,0,0,4,0,0}};
+    //Sudoku myPuz = {{0,0,8,0,0,1,7,0,0}, {0,3,0,0,6,4,0,0,9}, {2,0,0,3,0,0,0,0,0}, {0,0,5,0,0,0,6,0,0}, {0,0,2,8,4,6,5,0,0}, {0,0,1,0,0,0,9,0,0}, {0,0,0,0,0,9,0,0,2}, {7,0,0,4,5,0,0,9,0}, {0,0,9,7,0,0,4,0,0}};
 
     // THIS ONE IS UNSOLVABLE
     // It's basically a small modiciation of the "allegedly one of the hardest so far" puzzle.
     //Sudoku myPuz = {{8,0,0,0,0,0,0,0,0}, {0,0,3,6,0,0,0,0,0}, {0,7,0,0,9,0,2,0,0}, {0,5,0,0,0,0,7,0,0}, {0,0,0,0,4,5,7,0,0}, {0,0,0,1,0,0,0,3,0}, {0,0,1,0,0,0,0,6,8}, {0,0,8,5,0,0,0,1,0}, {0,9,0,0,0,0,4,0,0}}
+
+    Sudoku myPuz = {{0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
     int n = solve(myPuz); // int n represents the number of possible solutions to myPuz.
     if (n == 0) {
@@ -128,7 +130,9 @@ int isValid(Sudoku p, int n, int r, int c) {
 // For easier puzzles, it is called a few hundred times.
 // For harder puzzles, it is called a few ten thousand times.
 int solve(Sudoku p) {
-
+    if (numCalls == 100000000) {
+        return;
+    }
     int r, c, i; // Used in the loop.
     numCalls++; // Keeps track of how many times the solve method is called.
 
@@ -154,7 +158,7 @@ int solve(Sudoku p) {
             }
         }
     }
-    printPuz(p); // Print the solution.
+    //printPuz(p); // Print the solution.
     numSols++; // Increment numSols to indicate another solution has been found.
 
 }

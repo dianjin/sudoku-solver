@@ -5,10 +5,11 @@
 
 
 typedef struct {
-    long long grid[9];
-    short row[9];
-    short col[9];
-    short box[9];
+    unsigned long long grid[9];
+    unsigned short row[9];
+    unsigned short col[9];
+    unsigned short box[9];
+    unsigned char pos;
 } Sudoku;
 
 int numCalls = 0;
@@ -26,7 +27,7 @@ short getValue(long long storage, long long index) {
     return (storage & (fifteen << index)) >> index;
 }
 
-Sudoku updateSudoku(Sudoku puzzle, short r, short c, short val) {
+Sudoku updateSudoku(Sudoku puzzle, char r, char c, short val) {
     // Update actual sudoku
     puzzle.grid[r] = setValue(puzzle.grid[r], c, val);
 
@@ -35,14 +36,15 @@ Sudoku updateSudoku(Sudoku puzzle, short r, short c, short val) {
     puzzle.row[r] = puzzle.row[r] | one;
     puzzle.col[c] = puzzle.col[c] | one;
     puzzle.box[(c/3) + 3*(r/3)] = puzzle.box[(c/3) + 3*(r/3)] | one;
-
+    puzzle.pos = r << 4 | c;
+    //printf("row: %d %d col: %d %d pos: %d\n", r, puzzle.pos >> 4, c, puzzle.pos & 15, puzzle.pos);
     return puzzle;
 }
 
 
 Sudoku initSudoku(short puzzle[9][9]) {
     Sudoku mySudoku;
-    short r, c;
+    char r, c;
     for (r = 0; r < 9; r++) {
         mySudoku.row[r] = 0;
         mySudoku.col[r] = 0;
@@ -53,12 +55,13 @@ Sudoku initSudoku(short puzzle[9][9]) {
             mySudoku = updateSudoku(mySudoku, r, c, puzzle[r][c]);
         }
     }
+    mySudoku.pos = 0;
     return mySudoku;
 }
 
 
 void printSudoku(Sudoku myPuzzle) {
-    short r,c;
+    char r,c;
     for (r = 0; r < 9; r++) {
         for (c = 0; c < 9; c++) {
             printf("%d  ", getValue(myPuzzle.grid[r], c));
@@ -75,13 +78,12 @@ int main(void) {
 
     begin = clock();
 
-    //short myPuz[9][9] = {{0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
-
-    short myPuz[9][9] = {{0,9,3,0,5,0,0,0,4}, {0,0,7,0,0,0,0,8,0}, {5,6,0,9,0,0,0,0,7}, {0,8,0,0,3,9,4,2,0}, {0,4,0,8,2,7,0,3,0}, {0,3,5,6,1,0,0,9,0}, {9,0,0,0,0,5,0,4,2}, {0,7,0,0,0,0,1,0,0}, {3,0,0,0,4,0,8,7,0}};
-
-    //short myPuz[9][9] = {{0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
+    short myPuz[9][9] = {{0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
     //short myPuz[9][9] = {{0,9,3,0,5,0,0,0,4}, {0,0,7,0,0,0,0,8,0}, {5,6,0,9,0,0,0,0,7}, {0,8,0,0,3,9,4,2,0}, {0,4,0,8,2,7,0,3,0}, {0,3,5,6,1,0,0,9,0}, {9,0,0,0,0,5,0,4,2}, {0,7,0,0,0,0,1,0,0}, {3,0,0,0,4,0,8,7,0}};
+
+    //short myPuz[9][9] = {{0,0,8,0,0,1,7,0,0}, {0,3,0,0,6,4,0,0,9}, {2,0,0,3,0,0,0,0,0}, {0,0,5,0,0,0,6,0,0}, {0,0,2,8,4,6,5,0,0}, {0,0,1,0,0,0,9,0,0}, {0,0,0,0,0,9,0,0,2}, {7,0,0,4,5,0,0,9,0}, {0,0,9,7,0,0,4,0,0}};
+
     Sudoku myPuzzle = initSudoku(myPuz);
     solve(myPuzzle);
 
@@ -95,17 +97,18 @@ int main(void) {
 }
 
 void solve(Sudoku puzzle) {
-    if (numCalls == 1000000) {
+    if (numCalls == 100000000) {
         return;
     }
     numCalls++;
-
+    int poop;
     short valids;
-    short r, c, i;
+    char r, c, i;
     short one = 1;
-
-    for (r = 0; r < 9; r++) {
-        for (c = 0; c < 9; c++) {
+    r = puzzle.pos >> 4;
+    c = puzzle.pos & 15;
+    while (r < 9) {
+        while (c < 9) {
             if (!getValue(puzzle.grid[r], c)) {
                 valids = ((~(puzzle.row[r] | puzzle.col[c] | puzzle.box[(c/3) + 3*(r/3)])));
                     one = 1;
@@ -121,7 +124,10 @@ void solve(Sudoku puzzle) {
                     }
                     return;
             }
+            c++;
         }
+        c = 0;
+        r++;
     }
-    printSudoku(puzzle);
+    //printSudoku(puzzle);
 }
