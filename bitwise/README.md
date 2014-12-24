@@ -11,6 +11,7 @@ The core of this algorithm relies on some bitwise functions. Although this algor
 <li>Finding valid entries for a cell is done with a few bitwise operations. The numbers that have been used for each row, column, and square of the sudoku are stored in short integer flags. So a simple bitwise OR is used to determine the valid entries for a given cell.
 <li>A position tracker keeps track of the last filled cell of the grid, preventing redundant searches for the next empty cell. This is possible because the cells of the sudoku are always filled from left to right and top to bottom (which is not the most inefficient order to begin with).
 <li> Data types were selected to prevent memory wastage. For example, using unsigned chars and shorts instead of ints where possible.
+</ul>
 
 <h3>Other tips</h3>
 <ul>
