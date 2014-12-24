@@ -1,7 +1,10 @@
 sudoku-solver
 =============
 
-A recursive backtracking sudoku solver written in C.
+An recursive backtracking sudoku solver written in C.
+
+<h3>Inefficient Version</h3>
+This algorithm works, but is relatively inefficient. I'm only keeping it here for reference. The vastly superior (but still suboptimal) algorithm is in the bitwise folder.
 
 <h3>Files included</h3>
 <ul>
