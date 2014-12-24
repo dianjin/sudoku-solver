@@ -1,11 +1,10 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 
 
 
 typedef struct {
-    unsigned long long grid[9];
+    unsigned char grid[9][9];
     unsigned short row[9];
     unsigned short col[9];
     unsigned short box[9];
@@ -16,20 +15,9 @@ int numCalls = 0;
 int const puzSize = sizeof(Sudoku);
 long long const fifteen = 15;
 
-long long setValue(long long storage, short index, long long value) {
-    index = index << 2;
-    value = value << index;
-    return (storage & (~(fifteen << index))) | value;
-}
-
-short getValue(long long storage, long long index) {
-    index = index << 2;
-    return (storage & (fifteen << index)) >> index;
-}
-
 Sudoku updateSudoku(Sudoku puzzle, char r, char c, short val) {
     // Update actual sudoku
-    puzzle.grid[r] = setValue(puzzle.grid[r], c, val);
+    puzzle.grid[r][c] = val;
 
     // Update valid rows, cols, and boxes
     short one = 1 << (val-1);
@@ -64,7 +52,7 @@ void printSudoku(Sudoku myPuzzle) {
     char r,c;
     for (r = 0; r < 9; r++) {
         for (c = 0; c < 9; c++) {
-            printf("%d  ", getValue(myPuzzle.grid[r], c));
+            printf("%d  ", myPuzzle.grid[r][c]);
         }
         printf("\n\n");
     }
@@ -77,6 +65,12 @@ int main(void) {
     double time_spent;
 
     begin = clock();
+
+    // the hardest sudoku known toman??
+    //short myPuz[9][9] = {{8,5,0,0,0,2,4,0,0}, {7,2,0,0,0,0,0,0,9},{0,0,4,0,0,0,0,0,0},{0,0,0,1,0,7,0,0,2},{3,0,5,0,0,0,9,0,0},{0,4,0,0,0,0,0,0,0},{0,0,0,0,8,0,0,7,0},{0,1,7,0,0,0,0,0,0},{0,0,0,0,3,6,0,4,0}};
+
+    // takes over 100 seconds???
+    //short myPuz[9][9] = {{0,0,0,0,0,6,0,0,0}, {0,5,9,0,0,0,0,0,8},{2,0,0,0,0,8,0,0,0},{0,4,5,0,0,0,0,0,0},{0,0,3,0,0,0,0,0,0},{0,0,6,0,0,3,0,5,4},{0,0,0,3,2,5,0,0,6},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
     short myPuz[9][9] = {{0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
@@ -101,16 +95,15 @@ void solve(Sudoku puzzle) {
         return;
     }
     numCalls++;
-    int poop;
-    short valids;
-    char r, c, i;
     short one = 1;
+    char r, c, i;
     r = puzzle.pos >> 4;
     c = puzzle.pos & 15;
     while (r < 9) {
         while (c < 9) {
-            if (!getValue(puzzle.grid[r], c)) {
-                valids = ((~(puzzle.row[r] | puzzle.col[c] | puzzle.box[(c/3) + 3*(r/3)])));
+            if (!puzzle.grid[r][c]) {
+                short valids = ((~(puzzle.row[r] | puzzle.col[c] | puzzle.box[(c/3) + 3*(r/3)])));
+                if (valids) {
                     one = 1;
                     for (i = 1; i <= 9; i++) {
                         if (one & valids) {
@@ -123,6 +116,7 @@ void solve(Sudoku puzzle) {
                         one = one << 1;
                     }
                     return;
+                }
             }
             c++;
         }
@@ -130,4 +124,5 @@ void solve(Sudoku puzzle) {
         r++;
     }
     //printSudoku(puzzle);
+
 }
