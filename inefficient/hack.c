@@ -1,9 +1,9 @@
-// Sudoku Solver - Hack Version
+// Sudoku Solver (Inefficient) - Hack Version
 // Date: July 25, 2014
-// Developer: Dian Jin
+// Written by: Dian Jin
 // Github: http://github.com/dianjin
 //
-// This is Sudoku Solver - Hack Version.
+// This is Sudoku Solver (Inefficient) - Hack Version.
 // The Hack version does not have a user interface.
 // The Hack version is meant for customization and tinkering, and does not have any of the extra features included in the Demo version.
 // The Hack version is only able to solve one sudoku per excecution, making the excecution time representative of the time needed to solve a given sudoku.

@@ -1,9 +1,9 @@
-// Sudoku Solver - Demo Version
+// Sudoku Solver (Inefficient) - Demo Version
 // Date: July 25, 2014
-// Developer: Dian Jin
+// Written by: Dian Jin
 // Github: http://github.com/dianjin
 //
-// This is Sudoku Solver - Demo Version
+// This is Sudoku Solver (Inefficient) - Demo Version
 // The Demo version has a very bare-bones user interface.
 // The Demo version has extra features and is intended for demonstrations, rather than actual customization or tinkering.
 // It is much easier to modify or customize Sudoku Solver - Hack Version.
