@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 
-
+short shortshift[10] = {0,1,2,4,8,16,32,64,128,256};
 
 typedef struct {
     unsigned char grid[9][9];
@@ -18,9 +18,8 @@ long long const fifteen = 15;
 Sudoku updateSudoku(Sudoku puzzle, char r, char c, short val) {
     // Update actual sudoku
     puzzle.grid[r][c] = val;
-
     // Update valid rows, cols, and boxes
-    short one = 1 << (val-1);
+    short one = shortshift[val];
     puzzle.row[r] = puzzle.row[r] | one;
     puzzle.col[c] = puzzle.col[c] | one;
     puzzle.box[(c/3) + 3*(r/3)] = puzzle.box[(c/3) + 3*(r/3)] | one;
@@ -31,13 +30,8 @@ Sudoku updateSudoku(Sudoku puzzle, char r, char c, short val) {
 
 
 Sudoku initSudoku(short puzzle[9][9]) {
-    Sudoku mySudoku;
+    Sudoku mySudoku = {.row = {0}, .col = {0}, .box ={0}};
     char r, c;
-    for (r = 0; r < 9; r++) {
-        mySudoku.row[r] = 0;
-        mySudoku.col[r] = 0;
-        mySudoku.box[r] = 0;
-    }
     for (r = 0; r < 9; r++) {
         for (c = 0; c < 9; c++) {
             mySudoku = updateSudoku(mySudoku, r, c, puzzle[r][c]);
@@ -63,14 +57,7 @@ int main(void) {
 
     clock_t begin, end;
     double time_spent;
-
     begin = clock();
-
-    // the hardest sudoku known toman??
-    //short myPuz[9][9] = {{8,5,0,0,0,2,4,0,0}, {7,2,0,0,0,0,0,0,9},{0,0,4,0,0,0,0,0,0},{0,0,0,1,0,7,0,0,2},{3,0,5,0,0,0,9,0,0},{0,4,0,0,0,0,0,0,0},{0,0,0,0,8,0,0,7,0},{0,1,7,0,0,0,0,0,0},{0,0,0,0,3,6,0,4,0}};
-
-    // takes over 100 seconds???
-    //short myPuz[9][9] = {{0,0,0,0,0,6,0,0,0}, {0,5,9,0,0,0,0,0,8},{2,0,0,0,0,8,0,0,0},{0,4,5,0,0,0,0,0,0},{0,0,3,0,0,0,0,0,0},{0,0,6,0,0,3,0,5,4},{0,0,0,3,2,5,0,0,6},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
     short myPuz[9][9] = {{0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
