@@ -10,7 +10,7 @@ A recursive backtracking sudoku solver written in C.
 </ul>
 
 <h3>How the algorithm works</h3>
-Both the bitwise and inefficient versions are recursive backtracking algorithms. This gif from wikimedia pretty much sums it up:
+Both the bitwise and inefficient versions are recursive backtracking algorithms. This gif from wikimedia pretty much sums it up:<br>
 <img src="http://upload.wikimedia.org/wikipedia/commons/8/8c/Sudoku_solved_by_bactracking.gif">
 
 <h3>Other tips</h3>
